@@ -22,7 +22,7 @@ $query = Event::with('category')
         if ($request->has('category') && $request->category != '') {
             // Saring berdasarkan relasi tabel rujukan melalui properti slug kategori.
             $query->whereHas('category', function ($q) use ($request) {
- $q->where('slug', $request->category);
+$q->where('slug', $request->category);
             });
         }
 
