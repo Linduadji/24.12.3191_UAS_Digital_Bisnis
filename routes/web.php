@@ -9,6 +9,7 @@ use App\Http\Controllers\EventController;
 // Import Controller Admin
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as EventAdminController;
+use App\Http\Controllers\Admin\PartnerController as PartnerAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Halaman Utama Admin (Dashboard)
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
+    // Halaman list partner admin
+    Route::get('/partners', [PartnerAdminController::class, 'index'])->name('partners.index');
+
     // RUTE RESOURCE (Otomatis: index, create, store, edit, update, destroy)
     Route::resource('events', EventAdminController::class);
     
