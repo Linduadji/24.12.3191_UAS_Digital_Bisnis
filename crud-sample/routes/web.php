@@ -1,0 +1,10 @@
+<?php
+
+use App\Http\Controllers\ItemController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('items.index');
+});
+
+Route::resource('items', ItemController::class);
