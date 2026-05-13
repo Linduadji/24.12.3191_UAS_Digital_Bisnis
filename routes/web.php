@@ -40,6 +40,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     // Halaman list partner admin
     Route::get('/partners', [PartnerAdminController::class, 'index'])->name('partners.index');
+    Route::get('/partners/create', [PartnerAdminController::class, 'create'])->name('partners.create');
+    Route::post('/partners', [PartnerAdminController::class, 'store'])->name('partners.store');
 
     // RUTE RESOURCE (Otomatis: index, create, store, edit, update, destroy)
     Route::resource('events', EventAdminController::class);
