@@ -1,18 +1,18 @@
 @extends('layout.admin')
 
-@section('title', 'Kelola Partner - Admin')
+@section('title', 'Kelola Kategori - Admin')
 
-@section('page_title', 'Kelola Partner')
-@section('page_subtitle', 'Daftar partner yang bekerja sama dengan platform Anda.')
+@section('page_title', 'Kelola Kategori')
+@section('page_subtitle', 'Atur kategori event Anda di sini.')
 
 @section('content')
 <div class="mb-6 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
     {{-- Search Form --}}
-    <form action="{{ route('admin.partners.index') }}" method="GET" class="flex gap-2 flex-1 md:flex-none md:w-80">
+    <form action="{{ route('admin.categories.index') }}" method="GET" class="flex gap-2 flex-1 md:flex-none md:w-80">
         <input 
             type="text" 
             name="search" 
-            placeholder="Cari nama partner..." 
+            placeholder="Cari nama kategori..." 
             value="{{ $search ?? '' }}"
             class="flex-1 px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
         />
@@ -23,7 +23,7 @@
             Cari
         </button>
         @if($search)
-            <a href="{{ route('admin.partners.index') }}" 
+            <a href="{{ route('admin.categories.index') }}" 
                 class="px-4 py-3 bg-slate-100 text-slate-700 rounded-2xl font-bold hover:bg-slate-200 transition">
                 Reset
             </a>
@@ -31,16 +31,10 @@
     </form>
 
     {{-- Add Button --}}
-    <a href="{{ route('admin.partners.create') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition whitespace-nowrap">
-        + Tambah Partner Baru
+    <a href="{{ route('admin.categories.create') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition whitespace-nowrap">
+        + Tambah Kategori Baru
     </a>
 </div>
-
-@if(session('success'))
-    <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl font-bold">
-        {{ session('success') }}
-    </div>
-@endif
 
 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
@@ -48,44 +42,43 @@
             <thead class="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest">
                 <tr>
                     <th class="px-8 py-4 w-16">No</th>
-                    <th class="px-8 py-4">Logo</th>
-                    <th class="px-8 py-4">Nama Partner</th>
+                    <th class="px-8 py-4">Nama Kategori</th>
+                    <th class="px-8 py-4">Slug</th>
                     <th class="px-8 py-4">Dibuat Pada</th>
                     <th class="px-8 py-4">Diperbarui Pada</th>
                     <th class="px-8 py-4 text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y border-t">
-                @forelse($partners as $index => $partner)
+                @forelse($categories as $index => $category)
                 <tr class="hover:bg-slate-50/50 transition">
-                    <td class="px-8 py-6 font-bold text-slate-400">{{ $partners->firstItem() + $index }}</td>
-                    <td class="px-8 py-6">
-                        <div class="w-20 h-20 rounded-xl overflow-hidden shadow-sm border border-slate-100 bg-slate-50">
-                            <img src="{{ $partner->logo_url }}"
-                                alt="Logo {{ $partner->name }}"
-                                class="w-full h-full object-cover"
-                                onerror="this.src='https://placehold.co/160x160?text=No+Logo'">
-                        </div>
+                    <td class="px-8 py-6 font-bold text-slate-400">
+                        {{ $categories->firstItem() + $index }}
                     </td>
                     <td class="px-8 py-6">
-                        <p class="font-black text-slate-800">{{ $partner->name }}</p>
+                        <p class="font-black text-slate-800">{{ $category->name }}</p>
+                    </td>
+                    <td class="px-8 py-6">
+                        <span class="inline-block px-3 py-1 bg-slate-100 text-slate-700 text-xs font-bold rounded-lg">
+                            {{ $category->slug }}
+                        </span>
                     </td>
                     <td class="px-8 py-6 text-sm text-slate-600">
-                        {{ $partner->created_at->format('d M Y, H:i') }}
+                        {{ $category->created_at->format('d M Y, H:i') }}
                     </td>
                     <td class="px-8 py-6 text-sm text-slate-600">
-                        {{ $partner->updated_at->format('d M Y, H:i') }}
+                        {{ $category->updated_at->format('d M Y, H:i') }}
                     </td>
                     <td class="px-8 py-6">
                         <div class="flex justify-center gap-2">
-                            <a href="{{ route('admin.partners.edit', $partner->id) }}"
+                            <a href="{{ route('admin.categories.edit', $category->id) }}"
                                 class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition shadow-sm">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 00-2 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                 </svg>
                             </a>
 
-                            <form action="{{ route('admin.partners.destroy', $partner->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus partner ini?');">
+                            <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-600 hover:text-white transition shadow-sm">
@@ -99,7 +92,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-8 py-12 text-center text-slate-500">Belum ada partner yang terdaftar.</td>
+                    <td colspan="6" class="px-8 py-12 text-center text-slate-500">Belum ada kategori yang ditambahkan.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -108,9 +101,9 @@
 </div>
 
 {{-- Pagination (jika ada) --}}
-@if($partners->hasPages())
+@if($categories->hasPages())
 <div class="mt-6">
-    {{ $partners->links() }}
+    {{ $categories->links() }}
 </div>
 @endif
 

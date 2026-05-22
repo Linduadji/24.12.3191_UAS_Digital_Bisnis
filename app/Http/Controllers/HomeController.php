@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Category;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
         // 2. Buat kueri dasar untuk mengambil event: 
         // - Gunakan Eager loading `category`
         // - Hanya tampilkan kegiatan dengan jadwal yang belum kedaluwarsa (>= hari ini)
-$query = Event::with('category')
+        $query = Event::with('category')
                     ->where('date', '>=', now())
                     ->orderBy('date', 'asc');
 
@@ -22,13 +23,16 @@ $query = Event::with('category')
         if ($request->has('category') && $request->category != '') {
             // Saring berdasarkan relasi tabel rujukan melalui properti slug kategori.
             $query->whereHas('category', function ($q) use ($request) {
-$q->where('slug', $request->category);
+                $q->where('slug', $request->category);
             });
         }
 
         // 4. Eksekusi query dan kirim data hasilnya ke template Blade
         $events = $query->get();
 
-        return view('welcome', compact('events', 'categories'));
+        // 5. Ambil semua data Partner untuk ditampilkan di homepage
+        $partners = Partner::all();
+
+        return view('welcome', compact('events', 'categories', 'partners'));
     }
 }

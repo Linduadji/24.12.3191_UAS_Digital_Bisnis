@@ -8,11 +8,19 @@ use Illuminate\Http\Request;
 
 class PartnerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $partners = Partner::all();
+        $search = $request->input('search');
+        
+        // Query dengan pencarian dinamis
+        $partners = Partner::when($search, function ($query, $search) {
+            return $query->where('name', 'LIKE', '%' . $search . '%');
+        })
+        ->latest()
+        ->paginate(10)
+        ->appends(['search' => $search]); // Preserve search param saat pagination
 
-        return view('admin.partners.index', compact('partners'));
+        return view('admin.partners.index', compact('partners', 'search'));
     }
 
     public function create()

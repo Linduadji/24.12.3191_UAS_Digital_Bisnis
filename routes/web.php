@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as EventAdminController;
 use App\Http\Controllers\Admin\PartnerController as PartnerAdminController;
+use App\Http\Controllers\Admin\CategoryController as CategoryAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // RUTE RESOURCE (Otomatis: index, create, store, edit, update, destroy)
     Route::resource('events', EventAdminController::class);
+    
+    // RUTE RESOURCE untuk Categories CRUD
+    Route::resource('categories', CategoryAdminController::class);
     
     // Laporan Transaksi (Nama disesuaikan dengan sidebar kamu)
     Route::get('/transactions', [DashboardController::class, 'transactions'])->name('transactions');

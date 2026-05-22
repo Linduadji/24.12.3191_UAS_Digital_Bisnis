@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="flex-1 relative">
-            <img src="{{ asset('assets/concert.png') }}" alt="Concert" class="rounded-4xl shadow-2xl relative z-10 w-full object-cover aspect-[4/5] object-center">
+            <img src="{{ asset('assets/concert.png') }}" alt="Concert" class="rounded-4xl shadow-2xl relative z-10 w-full object-cover aspect-4/5 object-center">
         </div>
     </section>
 
@@ -48,12 +48,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($events as $event)
                 <div class="group bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                    <div class="relative overflow-hidden aspect-[3/4]">
+                    <div class="relative overflow-hidden aspect-3/4">
                         {{-- Menampilkan gambar dari storage --}}
                         <img src="{{ Storage::url($event->poster_path) }}" 
-                             alt="{{ $event->title }}" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/400x600?text=No+Image'">
+                            alt="{{ $event->title }}" 
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            onerror="this.src='https://placehold.co/400x600?text=No+Image'">
                         
                         {{-- 3. Memanggil Nama Kategori lewat Relasi --}}
                         <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-xs font-bold uppercase text-indigo-600 shadow-sm">
@@ -82,6 +82,35 @@
                 <div class="col-span-full py-20 text-center">
                     <p class="text-slate-400 font-bold text-xl">Yah, belum ada event di kategori ini :) </p>
                     <a href="{{ url('/') }}" class="text-indigo-600 underline">Lihat semua event</a>
+                </div>
+            @endforelse
+        </div>
+    </section>
+
+    {{-- Partners Section --}}
+    <section class="max-w-7xl mx-auto px-6 py-20 bg-linear-to-b from-slate-50 to-white rounded-3xl">
+        <div class="mb-12 text-center">
+            <h2 class="text-3xl font-extrabold mb-2">Mitra Terpercaya Kami</h2>
+            <p class="text-slate-500 font-medium">Platform AmikomEventHub didukung oleh partner-partner terbaik</p>
+        </div>
+
+        {{-- Grid Partners --}}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            @forelse($partners as $partner)
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center min-h-[150px]">
+                    <div class="text-center">
+                        <div class="w-full h-20 mb-3 flex items-center justify-center">
+                            <img src="{{ $partner->logo_url }}" 
+                                alt="Logo {{ $partner->name }}"
+                                class="max-w-full max-h-full object-contain"
+                                onerror="this.src='https://placehold.co/120x80?text={{ urlencode($partner->name) }}'">
+                        </div>
+                        <p class="text-sm font-bold text-slate-700 line-clamp-2">{{ $partner->name }}</p>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-full py-12 text-center">
+                    <p class="text-slate-400 font-medium">Belum ada mitra yang terdaftar</p>
                 </div>
             @endforelse
         </div>
