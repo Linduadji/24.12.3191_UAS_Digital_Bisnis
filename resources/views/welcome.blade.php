@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="flex-1 relative">
-            <img src="{{ asset('assets/concert.png') }}" alt="Concert" class="rounded-4xl shadow-2xl relative z-10 w-full object-cover aspect-4/5 object-center">
+            <img src="{{ asset('assets/game.jpg') }}" alt="Concert" class="rounded-4xl shadow-2xl relative z-10 w-full object-cover aspect-4/5 object-center">
         </div>
     </section>
 
@@ -50,10 +50,11 @@
                 <div class="group bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden">
                     <div class="relative overflow-hidden aspect-3/4">
                         {{-- Menampilkan gambar dari storage --}}
-                        <img src="{{ Storage::url($event->poster_path) }}" 
-                            alt="{{ $event->title }}" 
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            onerror="this.src='https://placehold.co/400x600?text=No+Image'">
+                        <img src="{{ ($event->poster_path && Storage::disk('public')->exists($event->poster_path))
+                        ? asset('storage/' . $event->poster_path)
+                        : 'https://placehold.co/200x600' }}" alt="{{ $event->title }}"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
                         
                         {{-- 3. Memanggil Nama Kategori lewat Relasi --}}
                         <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-xs font-bold uppercase text-indigo-600 shadow-sm">
@@ -71,9 +72,7 @@
                             <span class="text-2xl font-black text-indigo-600">
                                 {{ $event->price == 0 ? 'Gratis' : 'Rp ' . number_format($event->price, 0, ',', '.') }}
                             </span>
-                            <a href="{{ route('events.show', $event->id) }}" class="px-5 py-2 bg-indigo-50 text-indigo-600 rounded-xl font-bold hover:bg-indigo-600 hover:text-white transition">
-                                Detail
-                            </a>
+                            <a href="{{ route('events.show', $event->id) }}" class="px-5 py-2 bg-indigo-50 text-indigo-600 rounded-xl font-bold hover:bg-indigo-600 hover:text-white transition">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
@@ -90,14 +89,14 @@
     {{-- Partners Section --}}
     <section class="max-w-7xl mx-auto px-6 py-20 bg-linear-to-b from-slate-50 to-white rounded-3xl">
         <div class="mb-12 text-center">
-            <h2 class="text-3xl font-extrabold mb-2">Mitra Terpercaya Kami</h2>
+            <h2 class="text-3xl font-extrabold mb-2">Ini Merupakan Para Mitra Terpercaya Kami</h2>
             <p class="text-slate-500 font-medium">Platform AmikomEventHub didukung oleh partner-partner terbaik</p>
         </div>
 
         {{-- Grid Partners --}}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             @forelse($partners as $partner)
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center min-h-[150px]">
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center min-h-37.5">
                     <div class="text-center">
                         <div class="w-full h-20 mb-3 flex items-center justify-center">
                             <img src="{{ $partner->logo_url }}" 

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'AmikomEventHub - Temukan Event Seru!')</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -21,20 +22,51 @@
 
 <body class="bg-slate-50 text-slate-900">
 
-    <nav class="glass sticky top-8 z-40 mx-4 mt-4 px-6 py-4 rounded-2xl border border-white/20 shadow-lg flex justify-between items-center">
+    <nav
+        class="glass sticky top-8 z-40 mx-4 mt-4 px-6 py-4 rounded-2xl border border-white/20 shadow-lg flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
+            <div
+                class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
                 AH</div>
             <span class="text-xl font-bold tracking-tight">AmikomEventHub</span>
         </div>
         <div class="hidden md:flex gap-8 font-medium">
             <a href="{{ route('home') }}" class="text-indigo-600">Jelajahi</a>
+            @auth
+                <a href="{{ route('ticket') }}" class="hover:text-indigo-600 transition">Tiketku</a>
+            @endauth
             <a href="#" class="hover:text-indigo-600 transition">Kategori</a>
             <a href="#" class="hover:text-indigo-600 transition">Tentang Kami</a>
+        </div>
+        <div class="flex items-center gap-4">
+            @auth
+                @include('partials.profile_dropdown')
+            @else
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl font-semibold">Masuk</a>
+            @endauth
         </div>
     </nav>
 
     <main>
+        @if(session('success'))
+            <div id="success-alert"
+                class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-emerald-50 border border-green-200 text-green-500 px-8 py-6 rounded-2xl shadow-lg z-50 transition-opacity duration-500 font-medium text-lg text-center">
+                {{ session('success') }}
+            </div>
+
+            <script>
+                // Set timer 3 detik
+                setTimeout(function () {
+                    var alert = document.getElementById('success-alert');
+                    if (alert) {
+                        alert.style.opacity = '0';
+                        setTimeout(function () {
+                            alert.style.display = 'none';
+                        }, 500);
+                    }
+                }, 3000);
+            </script>
+        @endif
         @yield('content')
     </main>
 
@@ -42,20 +74,24 @@
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-12">
             <div class="space-y-4 col-span-2">
                 <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-900 font-bold text-xl">
+                    <div
+                        class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-900 font-bold text-xl">
                         AH</div>
                     <span class="text-2xl font-bold text-white">AmikomEventHub</span>
                 </div>
-                <p class="max-w-xs text-indigo-300">Platform reservasi tiket event online terbaik untuk mahasiswa dan penyelenggara profesional.</p>
+                <p class="max-w-xs text-indigo-300">Platform reservasi tiket event online terbaik untuk mahasiswa dan
+                    penyelenggara profesional.</p>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6">Kategori</h4>
                 <ul class="space-y-4">
-                    <li><a href="{{ url('/?category=seminar-it') }}" class="hover:text-white transition">Seminar IT</a></li>
-                    <li><a href="{{ url('/?category=entertaiment') }}" class="hover:text-white transition">Entertaiment</a></li>
+                    <li><a href="{{ url('/?category=seminar-it') }}" class="hover:text-white transition">Seminar IT</a>
+                    </li>
+                    <li><a href="{{ url('/?category=entertaiment') }}"
+                            class="hover:text-white transition">Entertaiment</a></li>
                     <li><a href="{{ url('/?category=hackaton') }}" class="hover:text-white transition">Hackaton</a></li>
-                    <li><a href="{{ url('/?category=workshop') }}" class="hover:text-white transition">Workshop</a></li>   
-                    <li><a href="{{ url('/?category=uiux') }}" class="hover:text-white transition">UIUX</a></li>  
+                    <li><a href="{{ url('/?category=workshop') }}" class="hover:text-white transition">Workshop</a></li>
+                    <li><a href="{{ url('/?category=uiux') }}" class="hover:text-white transition">UIUX</a></li>
                 </ul>
             </div>
             <div>
@@ -78,6 +114,7 @@
             &copy; 2026 AmikomEventHub. Built with Laravel & Tailwind CSS.
         </div>
     </footer>
-@stack('scripts')
+    @stack('scripts')
 </body>
+
 </html>

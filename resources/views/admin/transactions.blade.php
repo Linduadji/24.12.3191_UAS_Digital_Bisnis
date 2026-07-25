@@ -2,7 +2,6 @@
 
 @section('title', 'Laporan Transaksi')
 
-{{-- UBAH DUA BARIS INI --}}
 @section('page_title', 'Laporan Transaksi')
 @section('page_subtitle', 'Pantau arus kas dan penjualan tiket Anda.')
 
@@ -18,7 +17,7 @@
 
     <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
         <div class="px-8 py-6 bg-slate-50/50 border-b flex flex-wrap gap-4 items-center">
-            <div class="flex-1 min-w-[300px]">
+            <div class="flex-1 min-w-75">
                 <input type="text" placeholder="Cari Order ID, Nama, atau Email..."
                     class="w-full px-5 py-3 rounded-xl border-slate-200 border bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition uppercase text-sm font-medium tracking-wide">
             </div>
@@ -50,53 +49,66 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y border-t">
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-8 py-6">
-                            <span class="font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-sm">#TRX-99210</span>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="font-bold text-slate-800">Donni Prabowo</p>
-                            <p class="text-xs text-slate-500">donni@example.com</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="font-medium text-slate-700">Jazz Night 2026</p>
-                        </td>
-                        <td class="px-8 py-6 text-sm text-slate-500">22 Apr 2026, 17:45</td>
-                        <td class="px-8 py-6">
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-bold uppercase ring-1 ring-green-200">Success</span>
-                        </td>
-                        <td class="px-8 py-6 text-right font-black text-slate-900">Rp 155.000</td>
-                    </tr>
+                    {{-- LOOPING DATA DINAMIS DARI DATABASE --}}
+                    @forelse($transactions as $transaction)
+                        <tr class="hover:bg-slate-50/50 transition">
+                            <td class="px-8 py-6">
+                                <span class="font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-sm">
+                                    #{{ $transaction->order_id }}
+                                </span>
+                            </td>
+                            <td class="px-8 py-6">
+                                <p class="font-bold text-slate-800">{{ $transaction->customer_name }}</p>
+                                <p class="text-xs text-slate-500">{{ $transaction->customer_email }}</p>
+                            </td>
+                            <td class="px-8 py-6">
+                                {{-- Menampilkan judul event dari relasi tabel, jika terhapus tampilkan tanda strip --}}
+                                <p class="font-medium text-slate-700">{{ $transaction->event->title ?? '-' }}</p>
+                            </td>
+                            <td class="px-8 py-6 text-sm text-slate-500">
+                                {{ $transaction->created_at->format('d M Y, H:i') }}
+                            </td>
+                            
+                            {{-- BAGIAN YANG DIPERBAIKI --}}
+                            <td class="px-8 py-6">
+                        @php
+                            // Hilangkan spasi gaib dan ubah ke huruf kecil
+                            $status = strtolower(trim($transaction->status));
+                        @endphp
 
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-8 py-6">
-                            <span class="font-mono font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-lg text-sm">#TRX-99209</span>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="font-bold text-slate-800">Maya Sari</p>
-                            <p class="text-xs text-slate-500">maya@example.com</p>
-                        </td>
-                        <td class="px-8 py-6">
-                            <p class="font-medium text-slate-700">AI Workshop</p>
-                        </td>
-                        <td class="px-8 py-6 text-sm text-slate-500">22 Apr 2026, 15:20</td>
-                        <td class="px-8 py-6">
-                            <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-bold uppercase ring-1 ring-orange-200">Pending</span>
-                        </td>
-                        <td class="px-8 py-6 text-right font-black text-slate-900">Rp 55.000</td>
-                    </tr>
+                        @if($status === 'success' || $status === 'settlement' || $status === 'capture')
+                            <span class="px-3 py-1 bg-emerald-500 text-white rounded-lg text-xs font-bold uppercase shadow-sm">
+                                {{ $transaction->status }}
+                            </span>
+                        @elseif($status === 'pending')
+                            <span class="px-3 py-1 bg-orange-500 text-white rounded-lg text-xs font-bold uppercase shadow-sm">
+                                {{ $transaction->status }}
+                            </span>
+                        @else
+                            <span class="px-3 py-1 bg-rose-500 text-white rounded-lg text-xs font-bold uppercase shadow-sm">
+                                {{ $transaction->status }}
+                            </span>
+                        @endif
+                    </td>
+                            
+                            <td class="px-8 py-6 text-right font-black text-slate-900">
+                                Rp {{ number_format($transaction->total_price, 0, ',', '.') }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-8 py-12 text-center text-slate-500 font-medium">
+                                Belum ada data transaksi yang masuk ke sistem.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
-        <div class="px-8 py-6 bg-slate-50/50 border-t flex justify-between items-center">
-            <p class="text-sm text-slate-500 font-medium">Menampilkan 2 dari 124 transaksi</p>
-            <div class="flex gap-2">
-                <button class="px-4 py-2 border rounded-xl hover:bg-white transition text-sm font-bold opacity-50 cursor-not-allowed">Previous</button>
-                <button class="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-md text-sm font-bold">1</button>
-                <button class="px-4 py-2 border rounded-xl hover:bg-white transition text-sm font-bold">2</button>
-                <button class="px-4 py-2 border rounded-xl hover:bg-white transition text-sm font-bold">Next</button>
-            </div>
+        {{-- PAGINASI UNTUK LINK LARAVEL --}}
+        <div class="px-8 py-6 bg-slate-50/50 border-t">
+            {{ $transactions->links() }}
         </div>
     </div>
 @endsection

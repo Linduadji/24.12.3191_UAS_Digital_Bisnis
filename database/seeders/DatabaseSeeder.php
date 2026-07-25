@@ -13,7 +13,8 @@ public function run(): void
 'name' => 'Admin Amikom',
 'email' => 'admin@amikom.ac.id',
 'password' => bcrypt('password'),
-'role' => 'admin',
+'role' => 'admin'
+
 ]);
 // 2. Insert Kategori Event
 $category = \App\Models\Category::create([

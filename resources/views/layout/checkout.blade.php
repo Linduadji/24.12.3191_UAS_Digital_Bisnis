@@ -44,24 +44,30 @@
             </div>
 
             <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
-                <h3 class="text-xl font-bold mb-6 italic text-indigo-600 underline underline-offset-8">📦 Data Pemesan (Tanpa Login)</h3>
-                <form class="space-y-6">
+                <h3 class="text-xl font-bold mb-6 italic text-indigo-600 underline underline-offset-8">📦 Data Pemesan
+                    (Tanpa Login)</h3>
+                <form id="formCheckout" action="{{ route('checkout.store', $event->id) }}" method="POST" class="space-y-6">
+                    @csrf
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Nama Lengkap</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Nama
+                            Lengkap</label>
                         <input type="text" placeholder="Masukkan nama sesuai identitas"
                             class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium"
                             required>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Email Aktif</label>
+                            <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Email
+                                Aktif</label>
                             <input type="email" placeholder="contoh@gmail.com"
                                 class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium"
                                 required>
-                            <p class="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-tighter">*E-Ticket akan dikirim ke email ini</p>
+                            <p class="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-tighter">*E-Ticket akan
+                                dikirim ke email ini</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">No. WhatsApp</label>
+                            <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">No.
+                                WhatsApp</label>
                             <input type="tel" placeholder="08xxxxxxx"
                                 class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium"
                                 required>
@@ -84,7 +90,8 @@
                 <img src="https://midtrans.com/assets/img/logo-dark.png" alt="Midtrans Logo" class="h-6">
                 <button onclick="hideMidtrans()" class="p-2 hover:bg-slate-200 rounded-full">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
                     </svg>
                 </button>
             </div>
@@ -94,42 +101,60 @@
                 <p class="text-xs text-slate-400">Order ID #TRX-99210</p>
 
                 <div class="mt-8 space-y-4">
-                    <button type="button" onclick="window.location.href='{{ route('ticket') }}'"
+                    <button type="submit" form="formCheckout"
                         class="w-full py-4 border-2 border-indigo-100 rounded-2xl flex justify-between items-center px-6 hover:border-indigo-600 transition group">
                         <span class="font-bold group-hover:text-indigo-600">GoPay / QRIS</span>
                         <span class="text-indigo-400">→</span>
+                    </button>
+                    class="w-full py-4 border-2 border-indigo-100 rounded-2xl flex justify-between items-center px-6
+                    hover:border-indigo-600 transition group">
+                    <span class="font-bold group-hover:text-indigo-600">GoPay / QRIS</span>
+                    <span class="text-indigo-400">→</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
- @push('scripts')
-<script>
-    function showMidtrans() {
-        const overlay = document.getElementById('midtrans-overlay');
-        if (overlay) {
-            overlay.classList.remove('hidden');
-            overlay.classList.add('flex');
-        }
-    }
+    @push('scripts')
+        <script>
+            function showMidtrans() {
+                const overlay = document.getElementById('midtrans-overlay');
+                if (overlay) {
+                    overlay.classList.remove('hidden');
+                    overlay.classList.add('flex');
+                }
+            }
 
-    function hideMidtrans() {
-        const overlay = document.getElementById('midtrans-overlay');
-        if (overlay) {
-            overlay.classList.add('hidden');
-            overlay.classList.remove('flex');
-        }
-    }
-</script>
-@endpush
+            function hideMidtrans() {
+                const overlay = document.getElementById('midtrans-overlay');
+                if (overlay) {
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('flex');
+                }
+            }
+        </script>
+    @endpush
 
-<style>
-    @keyframes bounce-in {
-        0% { transform: scale(0.9); opacity: 0; }
-        70% { transform: scale(1.05); opacity: 1; }
-        100% { transform: scale(1); }
-    }
-    .animate-bounce-in { animation: bounce-in 0.4s ease-out forwards; }
-</style>
+    <style>
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-bounce-in {
+            animation: bounce-in 0.4s ease-out forwards;
+        }
+    </style>
 @endsection

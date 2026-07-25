@@ -16,8 +16,8 @@ class HomeController extends Controller
         // - Gunakan Eager loading `category`
         // - Hanya tampilkan kegiatan dengan jadwal yang belum kedaluwarsa (>= hari ini)
         $query = Event::with('category')
-                    ->where('date', '>=', now())
-                    ->orderBy('date', 'asc');
+                ->whereDate('date', '>=', now()->toDateString())
+                ->orderBy('date', 'asc');
 
         // 3. Filter query jika url memiliki parameter pencarian spesifik ?category=...
         if ($request->has('category') && $request->category != '') {
