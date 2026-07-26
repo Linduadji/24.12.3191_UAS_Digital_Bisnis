@@ -21,7 +21,7 @@
         {{-- Kategori --}}
         <div>
             <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Kategori</label>
-            <select name="category_id" class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium" required>
+            <select name="category_id" class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-600 outline-none transition font-medium" required>
                 <option value="">Pilih Kategori</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -85,7 +85,7 @@
         {{-- Tombol Aksi --}}
         <div class="pt-4 flex justify-end gap-4 border-t border-slate-100">
             <a href="{{ route('admin.events.index') }}" class="px-6 py-4 text-slate-500 font-bold hover:text-slate-800 transition">Batal</a>
-            <button type="submit" class="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition">
+            <button type="submit" class="px-8 py-4 bg-amber-600 text-white rounded-2xl font-bold shadow-lg shadow-amber-100 hover:bg-amber-700 transition">
                 Simpan Event
             </button>
         </div>

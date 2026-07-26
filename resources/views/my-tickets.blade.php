@@ -69,7 +69,7 @@
 
                     {{-- Actions --}}
                     <div class="md:col-span-1 flex flex-col gap-3 justify-center">
-                        <a href="{{ route('checkout.payment', $transaction->order_id) }}" class="px-4 py-3 bg-indigo-600 text-white rounded-xl font-bold text-center hover:bg-indigo-700 transition text-sm">
+                        <a href="{{ route('ticket.show', $transaction->order_id) }}" class="px-4 py-3 bg-indigo-600 text-white rounded-xl font-bold text-center hover:bg-indigo-700 transition text-sm">
                             🎫 Lihat E-Ticket
                         </a>
 

@@ -18,7 +18,11 @@
                     type="text" 
                     id="name" 
                     name="name" 
-                    class="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent @error('name') border-rose-500 @enderror"
+                    @class([
+                        'w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent',
+                        'border-rose-500' => $errors->has('name'),
+                        'border-slate-200' => ! $errors->has('name'),
+                    ])
                     placeholder="Contoh: Music Festival, Sports, Conference"
                     value="{{ old('name') }}"
                     required
@@ -32,7 +36,7 @@
             <div class="flex gap-3">
                 <button 
                     type="submit" 
-                    class="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition"
+                    class="flex-1 px-6 py-3 bg-indigo-600 text-slate-200 rounded-2xl font-bold hover:bg-indigo-700 active:scale-95 transition"
                 >
                     Simpan Kategori
                 </button>

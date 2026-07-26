@@ -25,6 +25,16 @@ public function ticket() {
         ->latest()
         ->get();
 
-    return view('my-tickets', compact('transactions'));
-}
+        return view('my-tickets', compact('transactions'));
+    }
+
+    public function showTicket($order_id) {
+        $transaction = \App\Models\Transaction::with('event.category')
+            ->where('order_id', $order_id)
+            ->where('user_id', auth()->id())
+            ->whereIn('status', ['success', 'settlement', 'capture'])
+            ->firstOrFail();
+
+        return view('layout.ticket', compact('transaction'));
+    }
 }

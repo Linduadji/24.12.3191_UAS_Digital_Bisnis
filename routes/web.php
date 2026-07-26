@@ -39,6 +39,7 @@ use App\Http\Middleware\OrganizerMiddleware;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
+Route::get('/ticket/{order_id}', [EventController::class, 'showTicket'])->name('ticket.show');
 
 // Rute Review (Publik untuk view, auth untuk create/store)
 Route::get('/events/{event}/reviews/create', [ReviewController::class, 'create'])->middleware('auth')->name('reviews.create');

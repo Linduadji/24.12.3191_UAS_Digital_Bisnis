@@ -17,7 +17,7 @@
 
     <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
         <div class="px-8 py-6 bg-slate-50/50 border-b flex flex-wrap gap-4 items-center">
-            <div class="flex-1 min-w-[300px]">
+            <div class="flex-1 min-w-75">
                 <input type="text" placeholder="Cari Order ID, Nama, atau Email..."
                     class="w-full px-5 py-3 rounded-xl border-slate-200 border bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition uppercase text-sm font-medium tracking-wide">
             </div>

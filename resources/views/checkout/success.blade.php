@@ -69,7 +69,7 @@
             <a href="{{ route('home') }}" class="px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition">
                 Kembali ke Beranda
             </a>
-            <a href="{{ route('ticket') }}" class="px-8 py-4 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition">
+            <a href="{{ route('ticket.show', $transaction->order_id) }}" class="px-8 py-4 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition">
                 Lihat E-Ticket
             </a>
         </div>

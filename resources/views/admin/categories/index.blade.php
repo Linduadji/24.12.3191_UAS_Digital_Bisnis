@@ -14,11 +14,11 @@
             name="search" 
             placeholder="Cari nama kategori..." 
             value="{{ $search ?? '' }}"
-            class="flex-1 px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            class="flex-1 px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
         <button 
             type="submit" 
-            class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition"
+            class="px-6 py-3 bg-indigo-600 text-slate-200 rounded-2xl font-bold hover:bg-indigo-700 transition"
         >
             Cari
         </button>
@@ -31,7 +31,7 @@
     </form>
 
     {{-- Add Button --}}
-    <a href="{{ route('admin.categories.create') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition whitespace-nowrap">
+    <a href="{{ route('admin.categories.create') }}" class="px-6 py-3 bg-indigo-600 text-slate-200 rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition whitespace-nowrap">
         + Tambah Kategori Baru
     </a>
 </div>
@@ -72,7 +72,7 @@
                     <td class="px-8 py-6">
                         <div class="flex justify-center gap-2">
                             <a href="{{ route('admin.categories.edit', $category->id) }}"
-                                class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition shadow-sm">
+                                class="p-2.5 bg-slate-50 text-indigo-600 rounded-xl hover:bg-slate-600 hover:text-white transition shadow-sm">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 00-2 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                 </svg>

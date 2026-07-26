@@ -18,7 +18,11 @@
                     type="text" 
                     id="name" 
                     name="name" 
-                    class="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent @error('name') border-rose-500 @enderror"
+                    @class([
+                        'w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent',
+                        'border-rose-500' => $errors->has('name'),
+                        'border-slate-200' => ! $errors->has('name'),
+                    ])
                     placeholder="Contoh: Nike, Adidas, Sony"
                     value="{{ old('name') }}"
                     required
@@ -36,7 +40,11 @@
                     type="url" 
                     id="logo_url" 
                     name="logo_url" 
-                    class="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent @error('logo_url') border-rose-500 @enderror"
+                    @class([
+                        'w-full px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent',
+                        'border-rose-500' => $errors->has('logo_url'),
+                        'border-slate-200' => ! $errors->has('logo_url'),
+                    ])
                     placeholder="https://example.com/logo.png"
                     value="{{ old('logo_url', 'https://placehold.co/200x200') }}"
                     required

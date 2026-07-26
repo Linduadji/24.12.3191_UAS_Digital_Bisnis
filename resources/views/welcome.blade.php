@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="flex-1 relative">
-            <img src="{{ asset('assets/game.jpg') }}" alt="Concert" class="rounded-4xl shadow-2xl relative z-10 w-full object-cover aspect-4/5 object-center">
+            <img src="{{ asset('assets/Kingsman.jpg') }}" alt="Concert" class="rounded-4xl shadow-2xl relative z-10 w-full object-cover aspect-4/5 object-center">
         </div>
     </section>
 

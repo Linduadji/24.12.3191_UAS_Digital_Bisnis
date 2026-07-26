@@ -8,7 +8,7 @@
 <div x-data="{ openAddModal: false, openEditModal: false, editData: {} }">
     
     <div class="mb-6 flex justify-end">
-        <button @click="openAddModal = true" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 active:scale-95 transition">
+        <button @click="openAddModal = true" class="px-6 py-3 bg-amber-600 text-white rounded-2xl font-bold shadow-lg shadow-amber-100 hover:bg-amber-700 active:scale-95 transition">
             + Tambah Event Baru
         </button>
     </div>
@@ -49,12 +49,12 @@
                             <p class="text-xs text-slate-400">{{ $event->category->name ?? 'Tanpa Kategori' }} • {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}</p>
                         </td>
                         <td class="px-8 py-6">
-                            <p class="font-bold text-indigo-600">Rp {{ number_format($event->price, 0, ',', '.') }}</p>
+                            <p class="font-bold text-amber-600">Rp {{ number_format($event->price, 0, ',', '.') }}</p>
                             <p class="text-xs text-slate-400">Stok: {{ $event->stock }}</p>
                         </td>
                         <td class="px-8 py-6">
                             <div class="flex gap-2">
-                                <button @click="editData = {{ $event }}; openEditModal = true" class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition">
+                                <button @click="editData = {{ $event }}; openEditModal = true" class="p-2.5 bg-amber-50 text-amber-600 rounded-xl hover:bg-amber-600 hover:text-white transition">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 00-2 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 </button>
                                 <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus event ini?')">
@@ -84,7 +84,7 @@
                     @csrf
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Judul Event</label>
-                        <input type="text" name="title" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        <input type="text" name="title" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none transition">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="pt-4 flex gap-3">
                         <button type="button" @click="openAddModal = false" class="flex-1 py-4 bg-slate-100 text-slate-600 rounded-2xl font-bold">Batal</button>
-                        <button type="submit" class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg">Simpan</button>
+                        <button type="submit" class="flex-1 py-4 bg-amber-600 text-white rounded-2xl font-bold shadow-lg">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -135,7 +135,7 @@
                     @csrf @method('PUT')
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Judul Event</label>
-                        <input type="text" name="title" x-model="editData.title" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        <input type="text" name="title" x-model="editData.title" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none transition">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="pt-4 flex gap-3">
                         <button type="button" @click="openEditModal = false" class="flex-1 py-4 bg-slate-100 text-slate-600 rounded-2xl font-bold">Batal</button>
-                        <button type="submit" class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg">Update</button>
+                        <button type="submit" class="flex-1 py-4 bg-amber-600 text-white rounded-2xl font-bold shadow-lg">Update</button>
                     </div>
                 </form>
             </div>

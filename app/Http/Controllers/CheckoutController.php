@@ -107,6 +107,10 @@ class CheckoutController extends Controller
 
         try {
             // Perintah Tembak Generate Snap Token
+            $params['finish_redirect_url'] = route('checkout.success', $orderId);
+            $params['unfinish_redirect_url'] = route('checkout.payment', $orderId);
+            $params['error_redirect_url'] = route('checkout.payment', $orderId);
+
             $snapToken = Snap::getSnapToken($params);
             
             // Update rekaman kita bahwa transaksi terkait sudah memiliki id 
