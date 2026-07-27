@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     public function show(\App\Models\Event $event) {
+        // Load organization and category relations
+        $event->load('organization', 'category');
+        
         // Mengambil daftar kategori untuk keperluan menu footer
         $categories = \App\Models\Category::all();
 

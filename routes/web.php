@@ -45,9 +45,11 @@ Route::get('/ticket/{order_id}', [EventController::class, 'showTicket'])->name('
 Route::get('/events/{event}/reviews/create', [ReviewController::class, 'create'])->middleware('auth')->name('reviews.create');
 Route::post('/events/{event}/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
 
-// Rute Proses Checkout & Pembayaran (Harus bisa diakses publik)
-Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout');
-Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
+// Rute Proses Checkout & Pembayaran (Harus Login)
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout');
+    Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
+});
 Route::get('/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
 Route::get('/checkout/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 
@@ -66,6 +68,8 @@ Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCa
 // Halaman login publik (user) dengan opsi Google
 Route::get('/login', [UserAuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [UserAuthController::class, 'login'])->name('login.post');
+Route::get('/register', [UserAuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [UserAuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [UserAuthController::class, 'logout'])->name('user.logout');
 
 

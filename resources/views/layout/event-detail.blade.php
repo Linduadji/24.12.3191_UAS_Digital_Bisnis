@@ -13,9 +13,14 @@
                     <div class="flex items-center gap-4">
                         <div
                             class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold">
-                            AB</div>
+                            @if($event->organization)
+                                {{ strtoupper(substr(str_replace(' ', '', $event->organization->name ?? ''), 0, 2)) }}
+                            @else
+                                AH
+                            @endif
+                        </div>
                         <div>
-                            <p class="font-bold text-slate-800">ABP Productions</p>
+                            <p class="font-bold text-slate-800">{{ $event->organization->name ?? 'Event Organizer' }}</p>
                             <p class="text-xs text-slate-500">Verified Organizer</p>
                         </div>
                     </div>

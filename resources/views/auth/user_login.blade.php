@@ -74,6 +74,14 @@
                 Continue with Google
             </a>
         </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-slate-600">
+                Belum punya akun?
+                <a href="{{ route('register') }}"
+                    class="text-indigo-600 font-bold hover:text-indigo-700">Daftar di sini</a>
+            </p>
+        </div>
     </div>
 </body>
 </html>

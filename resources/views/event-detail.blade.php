@@ -16,15 +16,19 @@
                         class="w-full rounded-2xl object-cover aspect-3/4">
                     </div>
 
-                    {{-- Informasi Penyelenggara --}}
+                    {{-- Informasi Penyelenggara (Dynamic dari Organization) --}}
                     <div class="bg-slate-50/50 rounded-2xl border border-slate-100 p-5">
                         <h4 class="text-sm font-black text-slate-800 mb-3">Penyelenggara</h4>
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-sm">
-                                AH
+                                @if($event->organization)
+                                    {{ strtoupper(substr(str_replace(' ', '', $event->organization->name ?? ''), 0, 2)) }}
+                                @else
+                                    AH
+                                @endif
                             </div>
                             <div>
-                                <p class="font-extrabold text-slate-800 text-sm">ABP Productions</p>
+                                <p class="font-extrabold text-slate-800 text-sm">{{ $event->organization->name ?? 'Event Organizer' }}</p>
                                 <p class="text-[11px] text-indigo-600 font-bold uppercase tracking-wider flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6.267 3.455a.75.75 0 00-.708.522L4.05 8.5H1.75a.75.75 0 000 1.5h2.55l1.25 4.163a.75.75 0 001.416-.04l1.516-5.306 1.157 3.472a.75.75 0 001.422-.046l1.833-6.111 1.054 2.634A.75.75 0 0015.25 9.5h3a.75.75 0 000-1.5h-2.541l-1.51-3.776a.75.75 0 00-1.393.047L10.93 10.51l-1.164-3.493a.75.75 0 00-1.425.043L6.267 3.455z" clip-rule="evenodd"/>

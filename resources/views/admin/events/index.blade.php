@@ -21,6 +21,7 @@
                         <th class="px-8 py-4 w-16">No</th>
                         <th class="px-8 py-4">Poster</th>
                         <th class="px-8 py-4">Event</th>
+                        <th class="px-8 py-4">Penyelenggara</th>
                         <th class="px-8 py-4">Harga / Stok</th>
                         <th class="px-8 py-4 text-center">Aksi</th>
                     </tr>
@@ -34,7 +35,7 @@
                             <td class="px-8 py-6">
                                 <div class="w-16 h-20 rounded-xl overflow-hidden shadow-sm border border-slate-100 bg-slate-50">
                                     @if($event->poster_path)
-                                                        {{-- PERBAIKAN: Gunakan $event->poster_path (bukan $events) --}}
+                                                        {{-- Gambar Event menggunakan asset untuk kompatibilitas --}}
                                                         <img src="{{ ($event->poster_path && Storage::disk('public')->exists($event->poster_path))
                                         ? asset('storage/' . $event->poster_path)
                                         : 'https://placehold.co/200x600' }}" alt="{{ $event->title }}"
@@ -50,6 +51,10 @@
                                 <p class="text-xs text-slate-400 italic">
                                     {{ $event->category->name ?? 'Uncategorized' }} • {{ $event->date->format('d M Y') }}
                                 </p>
+                            </td>
+                            <td class="px-8 py-6">
+                                <p class="font-bold text-indigo-600">{{ $event->organization->name ?? 'N/A' }}</p>
+                                <p class="text-xs text-slate-400">{{ $event->organization->slug ?? '' }}</p>
                             </td>
                             <td class="px-8 py-6">
                                 <p class="font-bold text-indigo-600">Rp {{ number_format($event->price, 0, ',', '.') }}</p>

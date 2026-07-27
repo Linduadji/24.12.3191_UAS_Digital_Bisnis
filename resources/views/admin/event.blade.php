@@ -38,7 +38,7 @@
                         <td class="px-8 py-6">
                             <div class="w-16 h-20 bg-slate-200 rounded-xl overflow-hidden shadow-sm">
                                 @if($event->poster_path)
-                                    <img src="{{ asset('storage/' . $event->poster_path) }}" class="w-full h-full object-cover">
+                                    <img src="{{ Storage::disk('public')->exists($event->poster_path) ? asset('storage/' . $event->poster_path) : 'https://placehold.co/160x200' }}" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center text-[10px] text-slate-400">No Image</div>
                                 @endif
@@ -82,6 +82,21 @@
                 <h3 class="text-2xl font-black mb-6">Tambah Event</h3>
                 <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                     @csrf
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Organisasi</label>
+                        <select name="organization_id" required class="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none">
+                            <option value="">-- Pilih Organisasi --</option>
+                            @php
+                                $orgs = $organizations ?? collect();
+                                if ($orgs->isEmpty()) {
+                                    $orgs = App\Models\Organization::all();
+                                }
+                            @endphp
+                            @foreach($orgs as $org)
+                                <option value="{{ $org->id }}">{{ $org->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Judul Event</label>
                         <input type="text" name="title" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none transition">
@@ -138,6 +153,21 @@
                         <input type="text" name="title" x-model="editData.title" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none transition">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Organisasi</label>
+                            <select name="organization_id" x-model="editData.organization_id" required class="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none">
+                                <option value="">-- Pilih Organisasi --</option>
+                                @php
+                                    $orgs = $organizations ?? collect();
+                                    if ($orgs->isEmpty()) {
+                                        $orgs = App\Models\Organization::all();
+                                    }
+                                @endphp
+                                @foreach($orgs as $org)
+                                    <option value="{{ $org->id }}">{{ $org->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div>
                             <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Kategori</label>
                             <select name="category_id" x-model="editData.category_id" required class="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none">

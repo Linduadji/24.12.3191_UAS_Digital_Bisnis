@@ -18,6 +18,20 @@
             @error('title') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
         </div>
 
+        {{-- Organisasi --}}
+        <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Organisasi Penyelenggara</label>
+            <select name="organization_id" class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-600 outline-none transition font-medium" required>
+                <option value="">Pilih Organisasi</option>
+                @foreach($organizations as $org)
+                    <option value="{{ $org->id }}" {{ old('organization_id') == $org->id ? 'selected' : '' }}>
+                        {{ $org->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('organization_id') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+        </div>
+
         {{-- Kategori --}}
         <div>
             <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Kategori</label>

@@ -22,7 +22,7 @@ class EventController extends Controller
     public function index()
     {
         // Memakai relasi dan pengaturan limit paginasi (10 entri per halaman)
-        $events = Event::with('category')->latest()->paginate(10);
+        $events = Event::with('category', 'organization')->latest()->paginate(10);
         return view('admin.events.index', compact('events'));
     }
 
@@ -33,7 +33,8 @@ class EventController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.events.create', compact('categories'));
+        $organizations = \App\Models\Organization::all();
+        return view('admin.events.create', compact('categories', 'organizations'));
     }
 
     /**
@@ -44,6 +45,7 @@ class EventController extends Controller
     {
         // Menerapkan validasi data request dari pengguna
         $data = $request->validate([
+        'organization_id' => 'required|exists:organizations,id',
         'category_id' => 'required|exists:categories,id',
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
@@ -73,7 +75,8 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $categories = Category::all();
-        return view('admin.events.edit', compact('event', 'categories'));
+        $organizations = \App\Models\Organization::all();
+        return view('admin.events.edit', compact('event', 'categories', 'organizations'));
     }
 
     /**
@@ -83,6 +86,7 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $data = $request->validate([
+        'organization_id' => 'required|exists:organizations,id',
         'category_id' => 'required|exists:categories,id',
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',

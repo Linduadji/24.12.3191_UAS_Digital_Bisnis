@@ -30,7 +30,7 @@
                     <td class="px-8 py-6">
                         <div class="w-16 h-20 rounded-xl overflow-hidden shadow-sm border border-slate-100 bg-slate-50">
                             @if($event->poster_path)
-                                <img src="{{ asset('storage/' . $event->poster_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
+                                <img src="{{ Storage::disk('public')->exists($event->poster_path) ? asset('storage/' . $event->poster_path) : 'https://placehold.co/160x200?text=No+Image' }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
                             @else
                                 <img src="https://placehold.co/160x200?text=No+Image" class="w-full h-full object-cover">
                             @endif

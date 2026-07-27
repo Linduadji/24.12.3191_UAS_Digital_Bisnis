@@ -19,12 +19,24 @@ class CheckoutController extends Controller
 {
     public function create(Event $event)
     {
+        // Auth middleware sudah memastikan user login
+        // Tapi tambahan safety check untuk admin
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('home')->with('error', 'Admin tidak dapat membeli tiket.');
+        }
+        
         $categories = Category::all();
         return view('checkout.create', compact('event', 'categories'));
     }
 
     public function store(Request $request, Event $event)
     {
+        // Auth middleware sudah memastikan user login
+        // Tapi tambahan safety check untuk admin
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('home')->with('error', 'Admin tidak dapat membeli tiket.');
+        }
+
         $request->validate([
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',
